@@ -28,3 +28,5 @@ yarn-debug.log*
 .yarn-integrity
 Gemfile.lock
 .idea
+
+config/database.yml

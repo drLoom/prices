@@ -16,6 +16,7 @@ gem 'pg', '~> 1.1.4'
 gem 'sequel', '~> 5.22'
 gem 'sequel-rails', '~> 1.0'
 gem 'clickhouse', '~> 0.1.10'
+gem 'bootstrap', '~> 4.3.1'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

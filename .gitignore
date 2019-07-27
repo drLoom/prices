@@ -30,3 +30,5 @@ Gemfile.lock
 .idea
 
 config/database.yml
+config/clickhouse.yml
+config/clickhouse/config/users.xml

@@ -35,4 +35,7 @@ module Clickhouse
       end
     end
   end
+
+  module ClickhouseExt
+  end
 end

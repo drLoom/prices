@@ -14,7 +14,7 @@ set :projects_path,   fetch(:projects_path, '/home/deploy/apps')
 set :user,            'deploy'
 set :ssh_options,     { forward_agent: true, user: fetch(:user), keys: %w(~/.ssh/id_rsa.pub) }
 
-set :linked_files, %w{config/database.yml config/clickhouse.yml}
+set :linked_files, %w{config/database.yml config/clickhouse.yml config/master.key}
 
 set :linked_dirs,    ['log']
 
@@ -42,6 +42,7 @@ set :puma_env, fetch(:rails_env)
 
 set :bundle_flags, '--quiet'
 
+
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do
@@ -63,13 +64,5 @@ namespace :deploy do
     end
   end
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'puma:restart'
-    end
-  end
-
   after  :finishing,    :cleanup
-  after  :finishing,    :restart
 end

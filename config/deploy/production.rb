@@ -40,6 +40,8 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, false
 set :puma_env, fetch(:rails_env)
 
+set :bundle_flags, '--quiet'
+
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do

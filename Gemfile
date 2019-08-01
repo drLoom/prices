@@ -27,6 +27,10 @@ gem 'capybara', '~> 3.26.0'
 gem 'poltergeist', '~> 1.18.1'
 gem 'concurrent-ruby', '~> 1.1.5'
 
+gem 'devise', '~> 4.6.2'
+gem 'sequel-devise', '~> 0.0.13'
+gem 'sequel-devise-generators'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
@@ -40,7 +44,6 @@ group :development do
 
   gem 'capistrano', '~> 3.11.0',         require: false
   gem 'capistrano-rails',   require: false
-  # gem 'capistrano-bundler', require: false
   gem 'capistrano-linked-files', require: false
   gem 'capistrano3-puma',   require: false
   gem 'capistrano-rvm',     require: false

@@ -1,0 +1,37 @@
+div class="card"
+  div class="card-header"
+    h4 class="card-title" Simple Table
+  div class="card-body"
+    div class="table-responsive"
+      table.table#estate-table
+        thead class=" text-primary"
+          tr
+            th Дата
+            th Адрес
+            th Комнат
+            th Площадь
+            th Цена
+            th Цена $
+            th Цена &#13217;
+            th Цена &#13217; $
+          tr
+            th Дата
+            th Адрес
+            th Комнат
+            th Площадь
+            th Цена
+            th Цена $
+            th Цена &#13217;
+            th Цена &#13217; $
+        tbody
+          - [].each do |estate|
+            tr
+              td = estate['date']
+              td
+                a href="#{estate['url']}" target="_blank" = estate['address']
+              td = estate['rooms']
+              td = estate['total_area']
+              td = number_with_delimiter estate['price']
+              td = number_with_delimiter estate['price_usd']
+              td = number_with_delimiter estate['meter_price']
+              td = number_with_delimiter estate['meter_price_usd']

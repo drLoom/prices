@@ -9,5 +9,7 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'dashboard#index'
 
+  resources :estate, controller: :estate, only: [:index]
+
   root 'dashboard#index'
 end

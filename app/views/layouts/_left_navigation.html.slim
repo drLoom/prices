@@ -1,0 +1,42 @@
+div.sidebar data-color="white" data-active-color="danger"
+  div class="logo"
+    a.simple-text.logo-mini href="http://www.creative-tim.com"
+      div.logo-image-small
+        img src="/img/logo-small.png"
+    a.simple-text.logo-normal href="http://www.creative-tim.com"
+      | Creative Tim
+
+  div.sidebar-wrapper
+    ul.nav
+      li class="#{params[:controller] =~ /estate/ ? 'active' : '' }"
+        = link_to estate_index_path do
+          i.nc-icon.nc-bank
+          p Недвижимость
+      li
+        a href="./icons.html"
+          i.nc-icon.nc-diamond
+          p Icons
+      li
+        a href="./map.html"
+          i.nc-icon.nc-pin-3
+          p Maps
+      li
+        a href="./notifications.html"
+          i.nc-icon.nc-bell-55
+          p Notifications
+      li
+        a href="./user.html"
+          i.nc-icon.nc-single-02
+          p User Profile
+      li
+        a href="./tables.html"
+          i.nc-icon.nc-tile-56
+          p Table List
+      li
+        a href="./typography.html"
+          i.nc-icon.nc-caps-small
+          p Typography
+      li.active-pro
+        a href="./upgrade.html"
+          i.nc-icon.nc-spaceship
+          p Upgrade to PRO

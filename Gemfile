@@ -30,6 +30,8 @@ gem 'concurrent-ruby', '~> 1.1.5'
 gem 'devise', '~> 4.6.2'
 gem 'sequel-devise', '~> 0.0.13'
 gem 'sequel-devise-generators'
+gem 'slim-rails', '~> 3.2'
+
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -37,6 +39,8 @@ group :development, :test do
 end
 
 group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'

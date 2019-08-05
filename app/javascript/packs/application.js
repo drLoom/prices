@@ -10,4 +10,5 @@ require("jquery")
 require("datatables.net");
 
 require("estate/estate_table")
-require("estate/load_date")
+require("estate/load_data")
+

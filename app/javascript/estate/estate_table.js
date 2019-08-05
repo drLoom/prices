@@ -1,7 +1,7 @@
-$(function () {
+document.addEventListener("turbolinks:load", function () {
     let tableId = '#estate-table'
 
-    $(`${tableId} thead tr:eq(1) th`).each(function () {
+    $(`${tableId} tfoot th`).each(function () {
         var title = $(this).text();
         $(this).html(`<input type="text" placeholder="${title}" />`);
     });
@@ -11,8 +11,10 @@ $(function () {
         ordering: true,
         paging: true,
         order: [[0, "asc"]],
-        iDisplayLength: 25,
+        iDisplayLength: 15,
         initComplete: function () {
+            $(`${tableId} tfoot`).css('display', 'table-header-group')
+
             this.api().columns().every(function () {
                 var column = this;
 

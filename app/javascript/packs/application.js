@@ -12,6 +12,9 @@ import Turbolinks from 'turbolinks'
 require("channels")
 require("jquery")
 require("datatables.net");
+require( "datatables.net-bs4")
+
+import "../application.scss"
 
 require("estate/estate_table")
 

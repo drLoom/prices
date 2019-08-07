@@ -1,5 +1,9 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
+// const merge = require('webpack-merge')
 const environment = require('./environment')
 
-module.exports = environment.toWebpackConfig()
+const config = environment.toWebpackConfig()
+config.devtool = 'none'
+
+module.exports = config

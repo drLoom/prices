@@ -9,12 +9,15 @@ import { definitionsFromContext } from "stimulus/webpack-helpers"
 import Rails from 'rails-ujs'
 import Turbolinks from 'turbolinks'
 
+
+import "../application.scss"
+
 require("channels")
 require("jquery")
 require("datatables.net");
 require( "datatables.net-bs4")
 
-import "../application.scss"
+
 
 require("estate/estate_table")
 

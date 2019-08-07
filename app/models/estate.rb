@@ -1,29 +1,38 @@
 class Estate
   class << self
     def filter(opts = {})
-      query = <<~SQL
-      SELECT e.date,
-             e.mur_id,
-             e.rooms,
-             e.address,
-             e.total_area / 100 total_area,
-             e.url,
-             'USD' AS currency,
-             r.rate / 10000 rate,
-             e.meter_price / 100 meter_price,
-             round(meter_price / rate, 1) meter_price_usd,
-             e.price / 100 price,
-             round(price / rate, 2) price_usd
-        FROM prices.estate e ANY
-               INNER JOIN prices.rates r USING (date, currency)
-        WHERE date = (SELECT max(date) FROM prices.estate) 
-              and toInt8(e.rooms) > 0
-              and e.price > 0
-              and e.meter_price > 0
-        SETTINGS join_use_nulls = 1
+      # :)
+      query = with_rate.
+        select(Sequel[:e][:date],
+               Sequel[:e][:mur_id],
+               Sequel[:e][:rooms],
+               Sequel[:e][:address],
+               Sequel[:e][:url],
+               Sequel.lit('e.total_area / 100 total_area'),
+               Sequel.lit('r.rate / 10000 rate'),
+               Sequel.lit('e.meter_price / 100 meter_price'),
+               Sequel.lit('round(meter_price / rate, 1) meter_price_usd'),
+               Sequel.lit('e.price / 100 price'),
+               Sequel.lit('round(price / rate, 2) price_usd'),
+               Sequel.lit("'USD' as currency")).
+        where(Sequel[:e][:date] => max_date_dataset).
+        where(Sequel.lit('toInt8(e.rooms) > 0')).
+        where { Sequel[:e][:price] > 0 }.
+        where { Sequel[:e][:meter_price] > 0 }
 
-      SQL
-      Clickhouse::Client.conn.query(query).to_hashes
+      Clickhouse::Client.conn.query(query.sql).to_hashes
+    end
+
+    def dataset
+      DB[Sequel[:prices][:estate].as(:e)]
+    end
+
+    def with_rate
+      dataset.join_table('ANY INNER', Sequel.lit('prices.rates r USING (date, currency)'))
+    end
+
+    def max_date_dataset
+      DB.from(Sequel.lit('prices.estate')).select(Sequel.function(:max, Sequel.lit('date')))
     end
   end
 end

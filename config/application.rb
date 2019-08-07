@@ -31,5 +31,9 @@ module Prices
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.sequel.after_connect = proc do
+      ::DB = Sequel::Model.db
+    end
   end
 end

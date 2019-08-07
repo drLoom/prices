@@ -1,9 +1,13 @@
-div class="card"
+div class="card" data-controller="card-spinner estate-table" data-target="card-spinner.card estate-table.card"
   div class="card-header"
-    h4 class="card-title" Simple Table
+    h4 class="card-title" Недвижимость
+
+    div class="d-flex justify-content-center spinner" data-target="card-spinner.spinner" style="display: none !important;"
+      div class="spinner-border" role="status"
+        span class="sr-only"
   div class="card-body"
     div class="table-responsive"
-      table.table#estate-table
+      table.table#estate-table data-target="estate-table.table"
         thead class=" text-primary"
           tr
             th Дата

@@ -31,6 +31,7 @@ gem 'devise', '~> 4.6.2'
 gem 'sequel-devise', '~> 0.0.13'
 gem 'sequel-devise-generators'
 gem 'slim-rails', '~> 3.2'
+gem 'mechanize'
 
 
 group :development, :test do

@@ -56,7 +56,7 @@ module Crawling
           puts "#{'Errors'.red}: #{errors.size}, proxies left to check: #{@pool.scheduled_task_count - @pool.completed_task_count}, #{'live:'.green} #{@live_proxies.size}, checked: #{@processed_jobs.size}"
 
           break if @processed_jobs.size >= (@pool.queue_length + @pool.scheduled_task_count)
-          break if @live_file && @live_proxies.size >= @live_limit
+          break if @live_file && @live_limit  && @live_proxies.size >= @live_limit
 
           sleep 1
         end

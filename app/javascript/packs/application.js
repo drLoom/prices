@@ -16,10 +16,8 @@ require("channels")
 require("jquery")
 require("datatables.net");
 require( "datatables.net-bs4")
+import 'bootstrap'
 
-
-
-require("estate/estate_table")
 
 const application = Application.start()
 const context = require.context("controllers", true, /.js$/)

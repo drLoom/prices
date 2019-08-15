@@ -1,9 +1,12 @@
 import {Controller} from "stimulus"
+import {tableSettings} from "../table/table_settings";
 
 export default class extends Controller {
     static targets = ["table", "card"]
 
     connect() {
+        let table = $(this.tableTarget).DataTable(tableSettings.config)
+
         let card = this.cardTarget
         var eventStart = new Event('cardFetchStart')
         var eventEnd = new Event('cardFetchEnd')
@@ -14,7 +17,7 @@ export default class extends Controller {
             .then((resp) => resp.json())
             .then(function (data) {
                 card.dispatchEvent(eventEnd)
-                let table = $('#estate-table').DataTable()
+                // let table = $('#estate-table').DataTable()
                 table.clear()
                 let f = new Intl.NumberFormat('en-EN', {style: 'currency', currency: 'USD'})
 

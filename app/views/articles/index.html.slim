@@ -1,0 +1,34 @@
+div class="card" data-controller="articles"
+  div class="card-header"
+    h4 class="card-title" Статьи
+  div class="card-body"
+    = form_for Articles::Article.new, url: articles_path, method: :post, html: { class: 'form-inline'} do |f|
+      div class="form-group"
+        = f.text_field :url, size: 100, class: "form-control", placeholder: "Url"
+      = button_tag class: 'btn btn-primary' do
+        i.nc-icon.nc-paper style="font-size: 1em;"
+
+    div class="table-responsive"
+      table.table#articles-table data-target="articles.table"
+        thead.text-primary
+          tr
+            th Дата
+            th Домен
+            th Статья
+        tfoot
+          tr
+            th Дата
+            th Домен
+            th Статья
+        tbody
+          - @arcticles.each do |article|
+            tr
+              td = article.date
+              td = article.domain
+              td
+                = link_to article.name, article_path(article.name), data: { 'action' => "click->articles#show" }
+
+  div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-target="articles.modal" style="left: -14em;"
+    div class="modal-dialog modal-lg"
+      div class="modal-content" style="width: 85em;"
+

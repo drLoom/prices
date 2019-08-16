@@ -12,5 +12,16 @@ Rails.application.routes.draw do
   resources :estate, controller: :estate, only: [:index]
   resources :articles
 
+  require 'sidekiq/web'
+  require 'sidekiq/cron/web'
+
+  # constraint = lambda do |request| request.env["warden"].authenticate? and
+  #   (request.env['warden'].user.admin? or request.env['warden'].user.monitor?)
+  # end
+
+#  constraints constraint do
+    mount Sidekiq::Web => '/sidekiq'
+#  end
+
   root 'dashboard#index'
 end

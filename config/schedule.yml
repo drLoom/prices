@@ -1,0 +1,18 @@
+realt_by_crawl:
+  cron: "20 12 * * 6"
+  class: "CrawlerWorker"
+  queue: default
+  args:
+    parser: 'realt_by'
+    threads_count: 1
+    proxy_file: '/home/deploy/apps/prices/shared/proxies/proxies2_live.txt'
+    verbose: true
+#realt_by_load:
+#  cron: "20 14 * * 6"
+#  class: "LoaderWorker"
+#  queue: default
+#  args: [4]
+#dollar_rate:
+#  cron: "40 14 * * 6"
+#  class: "CurrencyRatesWorker"
+#  queue: default

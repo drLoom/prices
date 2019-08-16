@@ -1,0 +1,11 @@
+---
+:verbose: false
+:concurrency: 1
+:queues:
+  - default
+
+production:
+  :concurrency: 1
+
+staging:
+  :concurrency: 1

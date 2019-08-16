@@ -32,7 +32,8 @@ gem 'sequel-devise', '~> 0.0.13'
 gem 'sequel-devise-generators'
 gem 'slim-rails', '~> 3.2'
 gem 'mechanize'
-
+gem 'sidekiq'
+gem 'sidekiq-cron'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

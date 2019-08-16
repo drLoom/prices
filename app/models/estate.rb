@@ -34,5 +34,18 @@ class Estate
     def max_date_dataset
       DB.from(Sequel.lit('prices.estate')).select(Sequel.function(:max, Sequel.lit('date')))
     end
+
+    def history(mur_id)
+      q = with_rate.
+        where(Sequel[:e][:mur_id] => mur_id).
+        select(Sequel[:e][:date],
+               Sequel.lit('e.meter_price / 100 meter_price'),
+               Sequel.lit('round(meter_price * 10000 / rate, 1) meter_price_usd'),
+               Sequel.lit('e.price / 100 price'),
+               Sequel.lit('round(price * 10000 / rate, 2) price_usd'),
+               Sequel.lit("'USD' as currency"))
+
+      Clickhouse::Client.conn.query(q.sql).to_hashes
+    end
   end
 end

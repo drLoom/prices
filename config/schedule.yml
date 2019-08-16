@@ -1,5 +1,5 @@
 realt_by_crawl:
-  cron: "20 12 * * 6"
+  cron: "20 12 * * *"
   class: "CrawlerWorker"
   queue: default
   args:

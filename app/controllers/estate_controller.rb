@@ -8,4 +8,12 @@ class EstateController < ApplicationController
       end
     end
   end
+
+  def show
+    respond_to do |format|
+      format.json do
+        render json: Estate.history(params[:id].to_i).to_json
+      end
+    end
+  end
 end

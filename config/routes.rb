@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'dashboard#index'
 
-  resources :estate, controller: :estate, only: [:index]
+  resources :estate, controller: :estate, only: [:index, :show]
   resources :articles
 
   require 'sidekiq/web'

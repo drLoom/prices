@@ -19,6 +19,8 @@ require( "datatables.net-bs4")
 import 'bootstrap'
 
 
+
+
 const application = Application.start()
 const context = require.context("controllers", true, /.js$/)
 application.load(definitionsFromContext(context))

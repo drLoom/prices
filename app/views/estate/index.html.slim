@@ -34,3 +34,8 @@ div class="card" data-controller="card-spinner estate-table" data-target="card-s
               td = estate['total_area']
               td = number_with_delimiter estate['price_usd']
               td = number_with_delimiter estate['meter_price_usd']
+
+    div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-target="estate-table.modal" style="left: -14em;"
+      div class="modal-dialog modal-lg"
+        div class="modal-content" style="width: 85em;"
+          div#estateChart

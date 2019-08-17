@@ -13,13 +13,13 @@ class CrawlerWorker
     parser = opts['parser']
     loader = case parser
              when /nbrb/
-               RateLoader
+               Loaders::RateLoader
              when /realt/
-               EstateLoader
+               Loaders::EstateLoader
              else
                raise "Unknown parser: #{parser.inspect}"
              end
 
-    "Loaders::#{loader}".constantize.new(file: DataStorage.today_entity_path(parser)).load_data
+    loader.new(file: DataStorage.today_entity_path(parser)).load_data
   end
 end

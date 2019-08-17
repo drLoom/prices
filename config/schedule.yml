@@ -7,12 +7,12 @@ realt_by_crawl:
     threads_count: 1
     proxy_file: '/home/deploy/apps/prices/shared/proxies/proxies2_live.txt'
     verbose: true
-#realt_by_load:
-#  cron: "20 14 * * 6"
-#  class: "LoaderWorker"
-#  queue: default
-#  args: [4]
-#dollar_rate:
-#  cron: "40 14 * * 6"
-#  class: "CurrencyRatesWorker"
-#  queue: default
+
+nbrb_crawl:
+  cron: "30 10 * * *"
+  class: "CrawlerWorker"
+  queue: default
+  args:
+    parser: 'nbrb'
+    threads_count: 1
+    verbose: true

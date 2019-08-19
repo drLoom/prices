@@ -1,7 +1,6 @@
 require_relative '../parser_base'
 
 class RealtBy < ParserBase
-  domain 'realt.by'
   start_urls 'https://realt.by/'
 
   debug_mode true

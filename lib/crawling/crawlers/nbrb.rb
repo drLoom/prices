@@ -1,7 +1,6 @@
 require_relative '../parser_base'
 
 class Nbrb < ParserBase
-  domain     'nbrb'
   start_urls "http://www.nbrb.by/API/ExRates/Rates/Dynamics/145?ParamMode=1&startDate=#{(Date.today - 360).strftime('%Y-%m-%d')}&endDate=#{Date.today.strftime('%Y-%m-%d')}"
 
   CURRENCIES = {

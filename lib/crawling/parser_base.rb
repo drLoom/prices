@@ -52,7 +52,7 @@ class ParserBase
   def initialize(opts = {})
     @validators = self.class.validators ? self.class.validators.map(&:dup) : []
 
-    @domain = self.class.crawler_options[:domain]
+    @domain = self.class.to_s.underscore
     @proxies = opts[:proxies]
   end
 

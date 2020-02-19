@@ -1,7 +1,7 @@
 require_relative '../parser_base'
 
 class RealtBy < ParserBase
-  start_urls 'https://realt.by/'
+  start_urls 'https://realt.by/?eID=tx_uedbcore_mapApi&tid=1&R=0&type=count&hash=3251352f988fb017062b7a6158611ee5&s%5Btown_id%5D%5Be%5D=5102&tx_uedbflat_pi2%5Brec_per_page%5D=30&tx_uedbflat_pi2%5Basc_desc%5D%5B0%5D=0&tx_uedbflat_pi2%5Basc_desc%5D%5B1%5D=0'
 
   debug_mode true
 
@@ -12,30 +12,19 @@ class RealtBy < ParserBase
   macro_validator :total, :errors, required: 0, less: true
 
   def start
-    browser     = nil
-    valid_proxy = nil
-    proxies.each do |proxy|
-      begin
-        browser = setup_capybara(app_host: 'https://realt.by/sale/flats/search/?search=all', proxy: proxy)
+    proxy = proxies.first
+    yield({ url: 'https://realt.by/sale/flats/search/', method: :get, callback: :parse_form, proxy: proxy })
+  end
 
-        browser.visit 'https://realt.by/sale/flats/search/?search=all'
-        browser.find(:xpath, "//select[contains(@name, 'town_id')]/option[contains(text(), 'Минск')]").select_option
-        browser.find(:xpath, "//a[@id='search-list']").click
-        sleep 2
+  def parse_form(response, data = {})
+    hash = response[:doc].xpath("//*[@id='secret-hash']/@value").text.strip
+    yield({ url: "https://realt.by/?eID=tx_uedbcore_mapApi&tid=1&R=0&type=count&hash=#{hash}&s%5Btown_id%5D%5Be%5D=5102&tx_uedbflat_pi2%5Brec_per_page%5D=30&tx_uedbflat_pi2%5Basc_desc%5D%5B0%5D=0&tx_uedbflat_pi2%5Basc_desc%5D%5B1%5D=0",
+            method: :get, callback: :parse, headers: headers, proxy: response[:proxy] })
+  end
 
-        valid_proxy = proxy
-        puts "valid_proxy: #{valid_proxy.host}:#{valid_proxy.port}".green
-        break
-      rescue Exception => e
-        puts e.message
-        puts e.backtrace
-
-        browser = nil
-        sleep 0.5
-      end
-    end
-
-    yield({ url: (browser.current_url + '&view=0'), method: :get, callback: :parse_category, headers: headers, proxy: valid_proxy })
+  def parse(response, data = {})
+    search_param = JSON(response[:doc].text)['search']
+    yield({ url: "https://realt.by/sale/flats/?search=#{search_param}&view=0#tabs", method: :get, callback: :parse_category, proxy: response[:proxy] })
   end
 
   def parse_category(response, data)
@@ -86,7 +75,7 @@ class RealtBy < ParserBase
   end
 
   def headers
-    { "User-Agent" => "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:43.0) Gecko/20100101 Firefox/43.0" }
+    { "User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36" }
   end
 
   def build_address(city, street, house)

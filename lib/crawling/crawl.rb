@@ -39,14 +39,18 @@ module Crawling
 
       Concurrent.global_logger = -> (_level, progname, _message) { @mutex.synchronize { errors << progname; puts [progname.message.red, progname.backtrace].join("\n") } }
 
-      @pool.post { Worker.new(@pool, @parser_class, queue.pop, processed_jobs).do_job }
+      0.upto(queue.size - 1) do
+        @pool.post { Worker.new(@pool, @parser_class, queue.pop, processed_jobs).do_job }
+      end
 
       while true
        puts "Errors: #{errors.size}, @pool.queue_length: #{@pool.queue_length}, scheduled_task_count: #{@pool.scheduled_task_count}, completed_task_count: #{@pool.completed_task_count}, processed_jobs: #{processed_jobs.size}, @pool.length: #{@pool.length}" if @verbose
 
         break if processed_jobs.size >= (@pool.queue_length + @pool.scheduled_task_count)
 
-        sleep 5
+        GC.start
+
+       sleep 10
       end
       @pool.shutdown
 

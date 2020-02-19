@@ -1,4 +1,5 @@
 require 'yaml'
+require 'active_support/all'
 
 module DataStorage
   DATA_DIR = '/data/prices'

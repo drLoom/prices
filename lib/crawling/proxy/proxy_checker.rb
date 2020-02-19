@@ -70,7 +70,7 @@ module Crawling
       end
 
       def headers
-        { "User-Agent" => "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:43.0) Gecko/20100101 Firefox/43.0" }
+        { "User-Agent" => "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36" }
       end
 
       def valid_proxy?(proxy)
@@ -84,7 +84,8 @@ module Crawling
 
         begin
           response = HTTParty.get(@url, options)
-
+require 'pry'
+binding.pry
           if response.code >= 200 && response.code < 300
             puts "live proxy #{ proxy }".green if @verbose
             return true

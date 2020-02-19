@@ -10,6 +10,8 @@ require_relative 'validators/validator_factory'
 require_relative 'validators/macro_validator_factory'
 
 class ParserBase
+  include DataStorage
+
   attr_reader :domain, :validators, :proxies
 
   class << self
@@ -82,7 +84,7 @@ class ParserBase
     with_errors = entities.select { |entity| entity[:errors] }
 
     unless with_errors.empty?
-      File.open(today_erros_path, 'w') do |f|
+      File.open(today_erros_path(domain), 'w') do |f|
         f.write(with_errors.to_yaml)
       end
     end
@@ -90,6 +92,7 @@ class ParserBase
     macro_validate(entities)
 
     puts "Folder: #{DataStorage.today_folder(domain)}".purple
+    puts "File: #{DataStorage.today_entity_path(domain)}".purple
     puts "Downloaded for #{self.class} entitys: #{entities.size}, doubles: #{total_doubles.to_i}, with_errors: #{with_errors.size}".green
   end
 
@@ -119,7 +122,7 @@ class ParserBase
       entity[key] = value.strip
     end
 
-    validate(entity)
+    #validate(entity)
 
     File.open(DataStorage.today_entity_path(domain), 'a') do |f|
       f.flock(File::LOCK_EX)
@@ -185,7 +188,7 @@ class ParserBase
     phantomjs_options << "--proxy=#{proxy.host}:#{proxy.port}" if proxy
 
     Capybara.register_driver :poltergeist do |app|
-      Capybara::Poltergeist::Driver.new(app, js_errors: false, debug: true, timeout: 40, phantomjs_options: phantomjs_options)
+      Capybara::Poltergeist::Driver.new(app, js_errors: false, debug: true, timeout: 140, phantomjs_options: phantomjs_options)
     end
 
     Capybara.current_session.driver.set_proxy(proxy.host, proxy.port) if proxy

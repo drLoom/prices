@@ -16,4 +16,12 @@ class EstateController < ApplicationController
       end
     end
   end
+
+  def average_rate
+    respond_to do |format|
+      format.json do
+        render json: Estate.average_rate.first.to_json
+      end
+    end
+  end
 end

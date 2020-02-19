@@ -16,6 +16,6 @@ class Worker
     end
 
   ensure
-    @processed_jobs << @job
+    @processed_jobs << { }
   end
 end

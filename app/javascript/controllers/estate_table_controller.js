@@ -18,7 +18,6 @@ export default class extends Controller {
             .then((resp) => resp.json())
             .then(function (data) {
                 card.dispatchEvent(eventEnd)
-                // let table = $('#estate-table').DataTable()
                 table.clear()
                 let f = new Intl.NumberFormat('en-EN', {style: 'currency', currency: 'USD'})
 

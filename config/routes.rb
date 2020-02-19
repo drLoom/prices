@@ -9,7 +9,11 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'dashboard#index'
 
-  resources :estate, controller: :estate, only: [:index, :show]
+  resources :estate, controller: :estate, only: [:index, :show] do
+    collection do
+      get :average_rate
+    end
+  end
   resources :articles
 
   require 'sidekiq/web'

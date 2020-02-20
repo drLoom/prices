@@ -8,11 +8,11 @@ class RealtBy < ParserBase
   validator :presence, :url, :code, :ad_created_at, :price, :city, :rooms
   validator :string, :rooms, verbose: true, regexp: /\A\d+\z/
 
-  macro_validator :total, :items, required: 6_000
+  macro_validator :total, :items, required: 5_000
   macro_validator :total, :errors, required: 0, less: true
 
   def start
-    proxy = proxies.first
+    proxy = proxies.sort_by { |p| p.response_time.to_i }.first
     yield({ url: 'https://realt.by/sale/flats/search/', method: :get, callback: :parse_form, proxy: proxy })
   end
 
@@ -23,8 +23,10 @@ class RealtBy < ParserBase
   end
 
   def parse(response, data = {})
-    search_param = JSON(response[:doc].text)['search']
-    yield({ url: "https://realt.by/sale/flats/?search=#{search_param}&view=0#tabs", method: :get, callback: :parse_category, proxy: response[:proxy] })
+    search_param = JSON(response[:doc].text)
+    puts "To download #{search_param['count']}".green
+
+    yield({ url: "https://realt.by/sale/flats/?search=#{search_param['search']}&view=0", method: :get, callback: :parse_category, proxy: response[:proxy] })
   end
 
   def parse_category(response, data)

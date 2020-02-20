@@ -1,11 +1,10 @@
 realt_by_crawl:
   cron: "20 12 * * *"
-  class: "CrawlerWorker"
+  class: "RealtByWorker"
   queue: default
   args:
     parser: 'realt_by'
-    threads_count: 1
-    proxy_file: '/home/deploy/apps/prices/shared/proxies/proxies2_live.txt'
+    threads_count: 5
     verbose: true
 
 nbrb_crawl:

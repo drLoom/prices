@@ -42,7 +42,7 @@ class Crawler
           job_result
         when 300...400
           level = opts[:level].to_i
-          puts result.headers['set-cookie'][/JSESSIONID=(\w+);/]
+
           if opts[:follow_redirects] && level < opts[:max_level]
             return get(result.headers['location'], headers, opts.merge(level: (level + 1)))
           else
@@ -54,7 +54,7 @@ class Crawler
 
     rescue Exception => e
       puts "****url: #{url} ----------try ##{retries + 1}\n"
-      retry if (retries += 1) < 10
+      retry if (retries += 1) < 20
     end
   end
 

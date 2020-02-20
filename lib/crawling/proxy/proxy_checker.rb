@@ -42,7 +42,14 @@ module Crawling
           @pool.post do
             begin
               proxy = queue.pop
-              @live_proxies << proxy if valid_proxy?(proxy)
+
+              tm = Time.now.to_i
+
+              valid = valid_proxy?(proxy)
+              tm_e = Time.now.to_i - tm
+              proxy.response_time = tm_e
+
+              @live_proxies << proxy if valid
             rescue StandardError => e
               puts e.error
 
@@ -84,8 +91,7 @@ module Crawling
 
         begin
           response = HTTParty.get(@url, options)
-require 'pry'
-binding.pry
+
           if response.code >= 200 && response.code < 300
             puts "live proxy #{ proxy }".green if @verbose
             return true
@@ -94,7 +100,7 @@ binding.pry
             return false
           end
         rescue => e
-          puts "Bad proxy: #{proxy}" if @verbose
+          puts "Bad proxy: #{proxy} Error: #{e.message}" if @verbose
           return false
         end
       end
